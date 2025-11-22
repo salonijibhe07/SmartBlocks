@@ -1,0 +1,657 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+
+/* Light mode color scheme - Soft pastels with cream base */
+:root {
+  --bg-primary: #fdfcfb;
+  --bg-secondary: #f7f5f2;
+  --bg-accent: #fff7ed;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --border-color: #e8e5e0;
+}
+
+/* Dark mode color scheme */
+.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-accent: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+}
+
+/* ===== EXISTING ANIMATIONS ===== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle, #e8e5e0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .bg-grid-pattern {
+  background-image: radial-gradient(circle, #374151 1px, transparent 1px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* ===== ENHANCED ANIMATIONS & EFFECTS ===== */
+
+/* 1. Enhanced Block Card Hover Effects */
+.block-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.block-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
+}
+
+.dark .block-card::before {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.block-card:hover::before {
+  left: 100%;
+}
+
+.block-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+}
+
+.dark .block-card:hover {
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* 2. Gradient Border Animation */
+@keyframes gradient-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--bg-primary);
+  border-radius: 0.75rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+  background-size: 300% 300%;
+  border-radius: 0.75rem;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: gradient-border 3s ease infinite;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* 3. Smooth Fade In with Stagger */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+/* 4. Glassmorphism Effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 5. Pulse Animation for New Items */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(96, 165, 250, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
+  }
+}
+
+.pulse-new {
+  animation: pulse-glow 2s infinite;
+}
+
+/* 6. Category Color Glow - Softer colors */
+.color-glow {
+  position: relative;
+  z-index: 1;
+}
+
+.color-glow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+  filter: blur(25px);
+  opacity: 0.3;
+  z-index: -1;
+  transition: opacity 0.3s;
+}
+
+.color-glow:hover::after {
+  opacity: 0.6;
+}
+
+/* Updated softer colors for categories */
+.bg-purple-500 { background-color: #9333ea; }
+.bg-orange-500 { background-color: #f97316; }
+.bg-green-500 { background-color: #22c55e; }
+.bg-pink-500 { background-color: #ec4899; }
+.bg-blue-500 { background-color: #3b82f6; }
+.bg-red-500 { background-color: #ef4444; }
+
+/* 7. Search Bar Animation - FIXED */
+.search-enhanced {
+  transition: all 0.3s ease;
+  position: relative;
+  background: var(--bg-primary);
+  border: 2px solid transparent;
+}
+
+.search-enhanced:focus-within {
+  transform: scale(1.02);
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+}
+
+.dark .search-enhanced:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
+}
+
+/* Fix search input styling */
+.search-enhanced input {
+  background: transparent !important;
+  color: var(--text-primary);
+}
+
+.search-enhanced input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+.dark .search-enhanced input::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Remove autofill background */
+.search-enhanced input:-webkit-autofill,
+.search-enhanced input:-webkit-autofill:hover,
+.search-enhanced input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary);
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-primary) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* 8. Button Hover Effects */
+.btn-3d {
+  position: relative;
+  transition: all 0.2s;
+  transform-style: preserve-3d;
+}
+
+.btn-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: brightness(0.85);
+  transform: translateZ(-4px) translateY(4px);
+  transition: all 0.2s;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+}
+
+.btn-3d:hover::before {
+  transform: translateZ(-2px) translateY(2px);
+}
+
+.btn-3d:active {
+  transform: translateY(0);
+}
+
+.btn-3d:active::before {
+  transform: translateZ(0) translateY(0);
+}
+
+/* 9. Loading Skeleton Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f3f4f6 25%,
+    #e5e7eb 50%,
+    #f3f4f6 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    #374151 25%,
+    #4b5563 50%,
+    #374151 75%
+  );
+}
+
+/* 10. Micro-interactions */
+.interactive-scale {
+  transition: transform 0.15s ease;
+}
+
+.interactive-scale:active {
+  transform: scale(0.97);
+}
+
+/* 11. Text Gradient Animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-gradient-animate {
+  background: linear-gradient(45deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* 12. Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 13. Enhanced Grid Pattern */
+.bg-grid-enhanced {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
+    radial-gradient(circle, var(--border-color) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 20px 20px;
+}
+
+/* 14. Card Shine Effect */
+@keyframes shine {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.card-shine:hover::after {
+  animation: shine 0.6s ease-in-out;
+}
+
+/* ===== FLOATING BACKGROUND ELEMENTS ===== */
+
+/* Floating orbs animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  33% {
+    transform: translateY(-30px) translateX(20px) scale(1.1);
+  }
+  66% {
+    transform: translateY(20px) translateX(-20px) scale(0.9);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  33% {
+    transform: translateY(30px) translateX(-20px) scale(0.9);
+  }
+  66% {
+    transform: translateY(-20px) translateX(20px) scale(1.1);
+  }
+}
+
+.floating-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%);
+  top: -200px;
+  left: -200px;
+  animation: float 20s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #f472b6 0%, #fbbf24 100%);
+  bottom: -150px;
+  right: -150px;
+  animation: float-reverse 25s ease-in-out infinite;
+}
+
+.floating-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #34d399 0%, #60a5fa 100%);
+  top: 50%;
+  left: 50%;
+  animation: float 30s ease-in-out infinite;
+}
+
+.dark .floating-orb {
+  opacity: 0.15;
+  filter: blur(80px);
+}
+
+/* Parallax stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #94a3b8;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(148, 163, 184, 0.5);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.dark .star {
+  opacity: 0.8;
+  background: white;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Gradient mesh background */
+.gradient-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.06) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.06) 0px, transparent 50%);
+  z-index: -2;
+}
+
+.dark .gradient-mesh {
+  opacity: 0.3;
+}
+
+/* ===== DARK MODE SPECIFIC STYLES ===== */
+
+/* Dark mode transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode base colors */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Better light mode backgrounds */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Theme toggle button - Improved */
+.theme-toggle {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  background: #e5e7eb;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.theme-toggle:hover {
+  border-color: #d1d5db;
+}
+
+.dark .theme-toggle {
+  background: #334155;
+}
+
+.dark .theme-toggle:hover {
+  border-color: #475569;
+}
+
+.theme-toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark .theme-toggle-slider {
+  transform: translateX(32px);
+  background: #1e293b;
+}
+
+/* Improved card styles */
+.card-base {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dark .card-base {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Category pills - Better contrast */
+.category-pill {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.category-pill:hover {
+  background: var(--bg-accent);
+  border-color: #cbd5e1;
+}
+
+.category-pill-active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+}
+
+/* Form Components */
+.form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed;
+}
+
+.form-select {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed;
+}
+
+.form-error {
+  @apply text-sm text-red-600 dark:text-red-400 mt-1;
+}
