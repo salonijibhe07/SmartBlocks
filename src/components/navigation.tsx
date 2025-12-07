@@ -21,19 +21,16 @@ export default function Navigation() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-
-    // Services dropdown (desktop)
     {
       name: "Services",
       dropdown: true,
       items: servicesItems,
     },
-
     { name: "Contact", href: "/contact" },
   ];
 
   return (
-    <nav className=" top-0 z-50 bg-white shadow-lg">
+    <nav className="top-0 z-50 bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Navbar Row */}
         <div className="flex items-center justify-between h-24 md:h-28">
@@ -52,35 +49,45 @@ export default function Navigation() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-10">
-            {/* Loop Desktop Items */}
             {navLinks.map((link) =>
               link.dropdown ? (
-                <div key={link.name} className="relative group cursor-pointer">
-                  <button
-                    className={`flex items-center font-semibold text-lg ${
-                      pathname.startsWith("/digital-marketing") ||
-                      pathname.startsWith("/web-services") ||
-                      pathname.startsWith("/cms-development") ||
-                      pathname.startsWith("/software-development")
-                        ? "text-blue-600"
-                        : "text-slate-700 hover:text-black"
-                    }`}
-                  >
-                    {link.name}
-                    <ChevronDown className="ml-1 w-4 h-4" />
-                  </button>
+                <div key={link.name} className="relative group h-full flex items-center">
+                  <div className="flex flex-col">
+                    <button
+                      className={`flex items-center font-semibold text-lg px-2 py-2 ${
+                        pathname.startsWith("/digital-marketing") ||
+                        pathname.startsWith("/web-services") ||
+                        pathname.startsWith("/cms-development") ||
+                        pathname.startsWith("/software-development")
+                          ? "text-blue-600"
+                          : "text-slate-700 group-hover:text-black"
+                      }`}
+                    >
+                      {link.name}
+                      <ChevronDown className="ml-1 w-4 h-4" />
+                    </button>
 
-                  {/* Dropdown Menu */}
-                  <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    {link.items.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                    {/* Invisible bridge to prevent gap */}
+                    <div className="absolute left-0 right-0 top-full h-2 bg-transparent" />
+
+                    {/* Dropdown Menu */}
+                    <div className="absolute left-0 top-full mt-2 w-56 bg-white shadow-xl rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      <div className="py-2">
+                        {link.items.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`block px-4 py-3 transition-colors ${
+                              pathname === item.href
+                                ? "bg-blue-50 text-blue-700 font-medium"
+                                : "text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                            }`}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -103,6 +110,7 @@ export default function Navigation() {
           <button
             className="md:hidden text-slate-700"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
           </button>
@@ -111,7 +119,6 @@ export default function Navigation() {
         {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-slate-200 pt-4 space-y-3">
-            {/* Home */}
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
@@ -124,7 +131,6 @@ export default function Navigation() {
               Home
             </Link>
 
-            {/* About */}
             <Link
               href="/about"
               onClick={() => setIsOpen(false)}
@@ -157,8 +163,15 @@ export default function Navigation() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="block py-2 text-slate-600 hover:text-blue-600"
+                      onClick={() => {
+                        setIsOpen(false);
+                        setOpenDropdown(false);
+                      }}
+                      className={`block py-2 ${
+                        pathname === item.href
+                          ? "text-blue-600 font-medium"
+                          : "text-slate-600 hover:text-blue-600"
+                      }`}
                     >
                       {item.label}
                     </Link>
@@ -167,7 +180,6 @@ export default function Navigation() {
               )}
             </div>
 
-            {/* Contact */}
             <Link
               href="/contact"
               onClick={() => setIsOpen(false)}
